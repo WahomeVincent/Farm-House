@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { MdOutlineUploadFile } from "react-icons/md";
+import Header from '../components/Header';
+import toast from 'react-hot-toast';
+
 
 function Newproduct() {
+
 
 const [data, setData] = useState({
   name : '',
@@ -32,28 +36,52 @@ function handleInputChange(e) {
       ...prevE, [name] : value
     }
   })
+
 }
 
-
-async function handleSubmit(e) {
-    e.preventDefault()
-    // const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/newproduct`,{
-    //   method: 'POST',
-    //   headers: {
-    //     'content-type' : 'application/json'
-    //   },
-    //   body : JSON.stringify(data)
-    // })
+function handleSubmit(e) {
+  e.preventDefault();
+  if (data.name && data.category && data.price && data.image && data.description) {
     
-    // const postData = await fetchData.json()
-    // console.log(postData);
-    console.log(data);
+    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/newproduct`, {
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(res => res.json())
+    .then(data => console.log(data)) 
+
+    alert('Product Created Successfully')
+  } else {
+    alert('Please Input all fields')
+  }
+
+      setData(() => {
+        return {
+            name : '',
+            category : '',
+            price : '',
+            image: '',
+            description: '',
+          
+        }
+      })
+
+      setImage(() => {
+        return {
+          image: ''
+        }
+      })
 }
 
 
 
   return (
     <div>
+
+      <Header />
       <div className=''>
 
           <form onSubmit={handleSubmit} className='my-10 p-2 border border-slate-300 m-2 rounded shadow drop-shadow md:max-w-lg md:m-auto md:my-4'>
@@ -91,7 +119,7 @@ async function handleSubmit(e) {
             <div className='my-2 border w-full h-44 md:h-64 rounded'>
                 <div className=' flex flex-col items-center justify-center gap-2 h-full bg-slate-100 '>
                   {
-                    image ? image && <img src={image} alt="preview image"                       
+                    image ? image && <img src={image} alt="preview"                       
                     className='w-full h-full rounded'/> :
                     <>
                     <MdOutlineUploadFile className='text-5xl'  />
@@ -113,7 +141,7 @@ async function handleSubmit(e) {
             </div>
 
             <div className='flex flex-col my-2'>
-                <label htmlFor='price' className='text-lg mx-2'>Price</label>
+                <label htmlFor='price' className='text-lg mx-2'>Price in Kes</label>
                 <input 
                   type='text'
                   placeholder='price'
@@ -124,9 +152,8 @@ async function handleSubmit(e) {
 
                 />
                 <label htmlFor='Description' className='text-lg mx-2'>Description</label>
-                <input 
-                  type='text'
-                  placeholder='description'
+                <textarea
+                  type='text-area'
                   name='description'
                   className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
                   onChange={handleInputChange}
@@ -136,7 +163,7 @@ async function handleSubmit(e) {
             </div>
 
             <div className=''>
-                <button className='flex justify-center text-lg bg-cgreen rounded p-2 text-white w-full'>Add item</button>
+                <button  className='flex justify-center text-lg bg-cgreen rounded p-2 text-white w-full'>Add item</button>
             </div>
 
           </form>
