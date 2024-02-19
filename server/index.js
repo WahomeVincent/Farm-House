@@ -42,6 +42,11 @@ app.post('/newproduct', (req, res) => {
     res.send({message : 'Product added to db successfully.'})
 })
 
+app.get('/products', async (req, res) => {
+    const data = await newproductModel.find({})
+    res.send(JSON.stringify(data))
+})
+
 
 app.listen(8000, (req, res) => {
     console.log('Server is running on port : ' + PORT);
