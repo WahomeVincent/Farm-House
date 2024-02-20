@@ -36,11 +36,15 @@ app.get('/', (req, res) => {
     res.send("Server is running")
 })
 
-app.post('/newproduct', (req, res) => {
+app.post('/newproduct', async (req, res) => {
     const data = newproductModel(req.body)
-    const dataSave = data.save()
-    res.send({message : 'Product added to db successfully.'})
+    const dataSave = await data.save()
+    // res.send({message : 'Product added to db successfully.'})
+    res.send(dataSave)
 })
+
+
+
 
 app.get('/products', async (req, res) => {
     const data = await newproductModel.find({})

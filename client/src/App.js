@@ -7,6 +7,7 @@ import { productsRedux } from './redux/productSlice';
 
 function App() {
   const dispatch = useDispatch()
+  const productData = useSelector(state => state.product)
 
   useEffect(() => {
     (async() => {
@@ -16,6 +17,8 @@ function App() {
     })()
   },[])
   
+  console.log(productData);
+
 
   return (
     <div className="App">
