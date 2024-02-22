@@ -1,12 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-require('dotenv').config()
+const dotenv = require('dotenv').config()
+const bodyParser = require('body-parser');
+
 
 // Express app
 const app = express()
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 app.use(cors())
 app.use(express.json());
+
 
 const PORT = process.env.PORT || 8000
 

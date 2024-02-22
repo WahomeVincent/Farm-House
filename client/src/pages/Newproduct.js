@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { MdOutlineUploadFile } from "react-icons/md";
 import Header from '../components/Header';
-import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { productsRedux } from '../redux/productSlice';
+import { ImageToBase64 } from '../utilities/ImageToBase64';
 
 
 function Newproduct() {
-
 
 const [data, setData] = useState({
   name : '',
@@ -15,19 +16,10 @@ const [data, setData] = useState({
   description: '',
 })
 
-const [image, setImage] = useState()
+const productData = useSelector((state) => state)
+console.log(productData);
 
-function handleImageChange (event) {
-  if (event.target.files && event.target.files[0]) {
-    const file = event.target.files[0];    
-    setImage(URL.createObjectURL(file));
-
-    setData((prevData) => ({
-      ...prevData,
-      image: file.name,
-    }));
-  }
-}
+const dispatch = useDispatch()
 
 function handleInputChange(e) {
   const {name, value} = e.target
@@ -39,19 +31,39 @@ function handleInputChange(e) {
 
 }
 
-function handleSubmit(e) {
+
+async function uploadImage(e) {
+  const data = await ImageToBase64(e.target.files[0])
+  setData((prevE)=> {
+    return {
+      ...prevE,
+      image : data
+    }
+  })
+}
+
+
+
+
+
+async function handleSubmit(e) {
   e.preventDefault();
+  console.log(data);
   if (data.name && data.category && data.price && data.image && data.description) {
     
-    fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/newproduct`, {
+    const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/newproduct`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
         },
         body: JSON.stringify(data),
     })
-    .then(res => res.json())
-    .then(data => console.log(data)) 
+
+    console.log(fetchData);
+    const dataRes = await fetchData.json()
+    console.log( dataRes);
+    
+    dispatch(productsRedux(dataRes))
 
     alert('Product Created Successfully')
   } else {
@@ -69,14 +81,7 @@ function handleSubmit(e) {
         }
       })
 
-      setImage(() => {
-        return {
-          image: ''
-        }
-      })
 }
-
-
 
   return (
     <div>
@@ -119,7 +124,7 @@ function handleSubmit(e) {
             <div className='my-2 border w-full h-44 md:h-64 rounded'>
                 <div className=' flex flex-col items-center justify-center gap-2 h-full bg-slate-100 '>
                   {
-                    image ? image && <img src={image} alt="preview"                       
+                    data.image ? data.image && <img src={data.image} alt="preview"                       
                     className='w-full h-full rounded'/> :
                     <>
                     <MdOutlineUploadFile className='text-5xl'  />
@@ -127,9 +132,11 @@ function handleSubmit(e) {
                     <input 
                       type='file'
                       accept='image/*'
-                      onChange={handleImageChange}
+                      onChange={uploadImage}
                       className='font-bold'
-                      value={image}
+                      value={data.image}
+                      onChangeCapture={handleInputChange}
+
                       
                     />
                     </>
