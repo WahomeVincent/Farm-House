@@ -9,6 +9,7 @@ import Newproduct from './pages/Newproduct';
 import Errorpage from './pages/Errorpage';
 import { store } from './redux/store';
 import {Provider } from 'react-redux'
+import CategoryPage from './pages/CategoryPage';
 
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: 'newproduct',
     element: <Newproduct />
+  },
+  {
+    path: '/products/:category',
+    element: <CategoryPage />
   }
  
 ])
