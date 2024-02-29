@@ -1,39 +1,36 @@
 import React, { useState } from 'react'
 import logo from '../assets/logo.png'
 import { Link } from 'react-router-dom'
-import { userAuth } from '../context/auth'
+import { UserAuth } from '../context/auth'
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+
 
 function Register() {
 
-    const [data, setData] = useState({
-        sirName : '',
-        firstName : '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    })
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const [error, setError] = useState('')
 
-    function handleInputChange(e) {
-        const {name, value} = e.target
-        setData(preve => {
-            return{
-                ...preve,
-                [name] : value
-            }
-        })
-        
-    }
+    const {createUser} = UserAuth()
+    const navigate = useNavigate()
 
     async function handleSubmit(e) {
         e.preventDefault()
         setError('')
         try {
-            // await createUser(data.email, data.password)
-        } catch (error) {
-            
+             await createUser(email, password)
+             toast.success('Account created successfully')
+             navigate('/login')
+
+        } catch (e) {
+            setError(e.message)
+            toast(e.message);
         }
+
+        setEmail('')
+        setPassword('')
     }
 
   return (
@@ -50,34 +47,13 @@ function Register() {
 
 
               <div className='flex flex-col gap-2 w-full m-2'>
-                  <label className='text-base'>Sirname</label>
-                  <input 
-                      type='text'
-                      placeholder=''
-                      name='sirName'
-                      value={data.sirName}
-                      onChange={handleInputChange}
-                      className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
-
-                  />
-
-                  <label className='text-base'>FirstName</label>
-                  <input 
-                      type=''
-                      name='firstName'
-                      value={data.firstName}
-                      onChange={handleInputChange}
-                      className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
-
-
-                  />
-
+                  
                   <label className='text-base'>Email</label>
                   <input 
                       type=''
                       name='email'
-                      value={data.email}
-                      onChange={handleInputChange}
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
                   />
 
@@ -85,21 +61,11 @@ function Register() {
                   <input 
                       type=''
                       name='password'
-                      value={data.password}
-                      onChange={handleInputChange}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                       className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
                   />
 
-                  <label className='text-base'>Confrim Password</label>
-                  <input 
-                      type=''
-                      name='confirmpassword'
-                      value={data.confirmPassword}
-                      onChange={handleInputChange}
-                      className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
-
-
-                  />
 
                   <button className='bg-blue-500 p-2 w-full rounded text-white my-2 text-lg'>Create Account</button>
 

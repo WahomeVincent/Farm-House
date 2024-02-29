@@ -1,9 +1,12 @@
 import Header from './components/Header';
 import Home from './pages/Home';
-import { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { productsRedux } from './redux/productSlice';
+import Footer from './components/Footer';
+import { Outlet } from 'react-router-dom';
+import { AuthContextProvider } from './context/auth';
 
 function App() {
   const dispatch = useDispatch()
@@ -17,14 +20,18 @@ function App() {
     })()
   },[])
   
-  console.log(productData);
 
 
   return (
     <div className="App">
       <Toaster />
-      <Header />
-      <Home />
+      <AuthContextProvider>
+          <Header />
+          <main>
+              <Outlet />
+          </main>
+          {/* <Footer /> */}
+      </AuthContextProvider>
     </div>
   );
 }
