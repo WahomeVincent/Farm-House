@@ -7,6 +7,8 @@ import { productsRedux } from './redux/productSlice';
 import Footer from './components/Footer';
 import { Outlet } from 'react-router-dom';
 import { AuthContextProvider } from './context/auth';
+import Sticky from 'react-stickynode';
+
 
 function App() {
   const dispatch = useDispatch()
@@ -24,9 +26,11 @@ function App() {
 
   return (
     <div className="App">
-      <Toaster />
-      <AuthContextProvider>
-          <Header />
+        <Toaster />
+        <AuthContextProvider>
+        <Sticky className='relative z-50 ' top="#header" bottomBoundary="#content">
+            <Header />
+        </Sticky>
           <main>
               <Outlet />
           </main>
