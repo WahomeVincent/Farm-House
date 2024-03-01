@@ -1,67 +1,97 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { FaCartShopping } from "react-icons/fa6";
-import { RxHamburgerMenu } from "react-icons/rx";
-import logo from '../assets/farm-logo.png'
-import { useSelector } from 'react-redux';
+import { useState } from "react";
+import {
+  PaperAirplaneIcon,
+  MoonIcon,
+  SunIcon,
+  Bars3Icon,
+  XMarkIcon,
+  ShoppingCartIcon,
+  UserIcon
+} from "@heroicons/react/24/outline";
+import { NavLink } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux';
+
 
 function Header() {
-  const CartNo = useSelector(state => state.product.cartItem.length)
-  const [menu, setMenu] = useState(false)
 
-  function toggleMenu() {
-     setMenu(preve => !preve)
-  }
-
-  function hideMenu() {
-    setMenu(false)
-  }
+  const cartNo = useSelector(state => state.product.cartItem.length)
+  const [toggleMenu, setToggleMenu] = useState(false);
 
   return (
-    <div className='bg-white fixed w-full shadow  px-2 md:px-4 z-50'>
-        <div className='flex items-center justify-between border-b  h-12 md:h-14'>
-            <Link to={'/'} className='h-full'>
-                  {/* <img src='https://cdn.pixabay.com/photo/2017/07/11/00/24/house-2492054_960_720.png' alt='logo' className='h-3/4 mx-4 my-1 rounded'/> */}
-                  <img src={logo} alt='logo' className='h-3/4 mx-4 my-1 rounded'/>
-            </Link>
+    <div className="app border-b">
+      <nav>
+        <div className="mx-auto ">
+          <div className="flex items-center justify-between  ">
+            {/* Primary menu and logo */}
+            <div className="flex items-center justify-between my-5 w-full">
+              {/* logo */}
+                      <div className="mx-4 md:mx-10 text-lg">
+                        <a
+                          href="/"
+                          className="flex gap-1 font-bold text-gray-700 items-center "
+                        >
+                          <PaperAirplaneIcon className="h-6 w-6 text-primary" />
+                          <span>Paper.io</span>
+                        </a>
+                      </div>
+              {/* primary */}
+                      <div className="hidden lg:flex items-center gap-8 mx-10 text-lg">
+                          <NavLink to={'/products'} >Products</NavLink>
+                          <NavLink to={'/aboutus'}>Aboutus</NavLink>
+                          <NavLink to={'/contactus'}>Contactus</NavLink>
+                          <NavLink to={'/cart'}><ShoppingCartIcon className="h-6 w-6 "/><span className=" absolute top-4 right-24 bg-red-600 h-4 w-4 flex items-center justify-center text-white text-sm rounded-full mb-4">{cartNo}</span></NavLink>
+                          <NavLink to={'/account'} ><UserIcon className="h-6 w-6 border border-slate-500 rounded-full  " /></NavLink>
 
-            {/* Medium and large screens */}
-            <div className='hidden md:flex items-center justify-between gap-10 text-lg'>
-              <Link to={'/products'}>Products</Link>
-              <Link to={'/aboutus'}>About Us</Link>
-              <Link to={'/newproduct'}>Contact Us</Link>
-              <Link to={'/newproduct'}>Testimonials</Link>
-              <Link to={'/newproduct'}>New Product</Link>
-
+                      </div>
             </div>
-
-            {/* Small screens */}
-            <div className='flex text-xl gap-6 mx-6'>
-                <div  className='relative'>
-                        <FaCartShopping className='md:text-2xl text-cgreen'/>
-                        <p className='absolute bottom-3 left-3 bg-red-500 rounded-xl text-sm  h-5 w-5 text-center text-white border'>{CartNo}</p>
+            {/* secondary */}
+            <div className="flex gap-6">
+              <div className="hidden xs:flex items-center gap-10">
+                <div className="hidden lg:flex items-center gap-2">
+                  <MoonIcon className="h-6 w-6" />
+                  <SunIcon className="h-6 w-6" />
                 </div>
-                <div onClick={toggleMenu} className='z-50' onMouseLeave={hideMenu} >
-                      <RxHamburgerMenu className='md:hidden relative cursor-pointer text-cgreen' />
-
-                        {
-                          menu && 
-                              <div   className='bg-white hover:text-red-400 border flex text-white flex-col gap-4 px-4 absolute top-12 right-0 w-3/4 h-1/2 md:hidden shadow-lg drop-shadow-lg border-slate-400 '>
-                                  <Link to={'/products'} className='text-black hover:text-red-400'>Products</Link>
-                                  <Link to={'/aboutus'} className='text-black hover:text-red-400'>About Us</Link>
-                                  <Link to={'/newproduct'} className='text-black hover:text-red-400'>Contact Us</Link>
-                                  <Link to={'/newproduct'} className='text-black hover:text-red-400'>Testimonials</Link>
-                                  <Link to={'/newproduct'} className='text-black hover:text-red-400'>New Product</Link>
-
-                              </div>
-
-                        }
-                      
+                <div>
+                  <button className="rounded-full border-solid border-2 border-gray-300 py-2 px-4 hover:bg-gray-700 hover:text-gray-100">
+                    Free Trial
+                  </button>
                 </div>
+              </div>
+              {/* Mobile navigation toggle */}
+              <div className="lg:hidden flex items-center mx-4">
+                <NavLink to={'/cart'}>
+                    <ShoppingCartIcon className="h-6 w-6 mx-4 hover:text-cgreen"/>
+                        <span className=" absolute top-4 right-12 bg-red-600 h-4 w-4 flex items-center justify-center text-white rounded-full mb-4">
+                            {cartNo}
+                        </span>
+                </NavLink>
+                <button onClick={() => setToggleMenu(!toggleMenu)}>
+                  <Bars3Icon className="h-6" />
+                </button>
+              </div>
             </div>
+          </div>
         </div>
+        {/* mobile navigation */}
+        <div
+          className={`fixed z-40 w-full  bg-gray-100 overflow-hidden flex flex-col lg:hidden gap-12  origin-top duration-700 ${
+            !toggleMenu ? "h-0" : "h-1/2"
+          }`}
+        >
+          <div className="px-8 my-2">
+            <div className="flex flex-col gap-8 font-bold tracking-wider">
+             
+              <NavLink to={'/products'} >Products</NavLink>
+              <NavLink to={'/aboutus'}>Aboutus</NavLink>
+              <NavLink to={'/contactus'}>Contactus</NavLink>
+              <NavLink to={'/account'}>Account</NavLink>
+              
+            </div>
+          </div>
+        </div>
+      </nav>
     </div>
-  )
+  );
 }
 
-export default Header
+export default Header;
