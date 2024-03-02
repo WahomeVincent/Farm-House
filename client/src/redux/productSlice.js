@@ -24,11 +24,18 @@ export const productSlice = createSlice({
             } else{
                 toast('Item already in Cart')
             }
+        },
+
+        deleteCartItem: (state, action) => {
+            const itemDeleted = (action.payload[1])
+            toast(itemDeleted + ' is removed.')
+            const index = state.cartItem.findIndex((item) => item === item._id)
+            state.cartItem.splice(index)
         }
     }
 })
 
 
 
-export const { productsRedux, addCartItem } = productSlice.actions
+export const { productsRedux, addCartItem, deleteCartItem } = productSlice.actions
 export default productSlice.reducer
