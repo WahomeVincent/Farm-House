@@ -3,31 +3,40 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 // import Home from './pages/Home';
 import Newproduct from './pages/Newproduct';
 import Errorpage from './pages/Errorpage';
 import { store } from './redux/store';
 import {Provider } from 'react-redux'
 import CategoryPage from './pages/CategoryPage';
+import Products from './pages/Products';
+import ProductItem from './pages/ProductItem';
+import Home from './pages/Home';
+import Aboutus from './pages/Aboutus';
+import Cart from './pages/Cart';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Account from './pages/Account';
 
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <Errorpage />
-  },
-  {
-    path: 'newproduct',
-    element: <Newproduct />
-  },
-  {
-    path: '/products/:category',
-    element: <CategoryPage />
-  }
- 
-])
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<App />} errorElement={<Errorpage />}>
+          <Route index element={<Home />} />
+          <Route path='product/:filterBy' element={<ProductItem />} />
+          <Route path='products' element={<Products />} />
+          <Route path='products/:category' element={<CategoryPage />} />
+          <Route path='newproduct' element={<Newproduct />} />
+          <Route path='aboutus' element={<Aboutus />} />
+          <Route path='cart' element={<Cart />} />
+          <Route path='login' element={<Login />} />
+          <Route path='register' element={<Register />} /> 
+          <Route path='account' element={<Account />} />
+    </Route>
+  )
+)
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
