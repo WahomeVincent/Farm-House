@@ -4,11 +4,11 @@ import { MdDelete } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import { FiMinus } from "react-icons/fi";
 import { deleteCartItem } from '../redux/productSlice';
+import { increaseItemNo, decreaseItemNo } from '../redux/productSlice';
 import { Link } from 'react-router-dom';
 
 function Cart() {
 const productCart = useSelector(state => state.product.cartItem)
-console.log(productCart);
 
 const dispatch = useDispatch()
 
@@ -28,12 +28,18 @@ const dispatch = useDispatch()
                         <div className='flex flex-col justify-between  w-1/4 mx-4'>
                               <h2 className='text-'>{item.name}</h2>
                               <div className='flex items-center gap-2 border bg-slate-100 px-1 w-3/4 rounded'>
-                                  <FiPlus /><span className='bg-white px-1'>{item.quantity}</span><FiMinus />
+                                    <button onClick={() => dispatch(increaseItemNo(item._id))}>
+                                        <FiPlus  />
+                                    </button>
+                                    <span className='bg-white px-1'>{item.quantity}</span>
+                                    <button onClick={() => dispatch(decreaseItemNo(item._id))}>
+                                        <FiMinus />
+                                    </button>
                               </div>
                         </div>
 
                         <div className='flex flex-col justify-between'>
-                              <p>Kes: {item.price}</p>
+                              <p>Total : Kes {item.total}</p>
                               <button onClick={() => dispatch(deleteCartItem([item._id, item.name]))} className='flex items-center gap-1 text-sm text-slate-600 hover:text-red-500' ><MdDelete /> <span className=''>Delete</span> </button>
                         </div>
                     </div>
