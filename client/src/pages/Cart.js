@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MdDelete } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
 import { FiMinus } from "react-icons/fi";
-import { deleteCartItem } from '../redux/productSlice';
-import { increaseItemNo, decreaseItemNo } from '../redux/productSlice';
+import { deleteCartItem, increaseItemNo, decreaseItemNo } from '../redux/productSlice';
 import { Link } from 'react-router-dom';
 
 function Cart() {
 const productCart = useSelector(state => state.product.cartItem)
+let totalPriceCart = productCart.reduce((acc, curr) => acc + curr.total,0)
+
+let discount = '0.00'
+let deliveryFee = 100
+
+if(totalPriceCart > 2000){
+    discount = Math.floor(totalPriceCart * 0.05)
+}
+
+let totalPrice = (totalPriceCart + deliveryFee) - discount 
 
 const dispatch = useDispatch()
 
@@ -27,12 +36,12 @@ const dispatch = useDispatch()
 
                         <div className='flex flex-col justify-between  w-1/4 mx-4'>
                               <h2 className='text-'>{item.name}</h2>
-                              <div className='flex items-center gap-2 border bg-slate-100 px-1 w-3/4 rounded'>
-                                    <button onClick={() => dispatch(increaseItemNo(item._id))}>
+                              <div className='flex items-center gap-2'>
+                                    <button onClick={() => dispatch(increaseItemNo(item._id))} className='bg-slate-200 p-1 rounded '>
                                         <FiPlus  />
                                     </button>
                                     <span className='bg-white px-1'>{item.quantity}</span>
-                                    <button onClick={() => dispatch(decreaseItemNo(item._id))}>
+                                    <button onClick={() => dispatch(decreaseItemNo(item._id))} className='bg-slate-200 p-1 rounded '>
                                         <FiMinus />
                                     </button>
                               </div>
@@ -51,17 +60,17 @@ const dispatch = useDispatch()
                           <h1 className='mx-2 my-2 text-xl border-b pb-2'>Order Summary</h1>
                           <div className='flex items-center justify-between mx-2 my-4'>
                               <p className='text-slate-500'>Discount</p>
-                              <p>Kes: 10</p>
+                              <p >Kes: <span className='text-slate-700'>{discount}</span></p>
                           </div>
 
                           <div className='flex items-center justify-between mx-2 my-4'>
                               <p className='text-slate-500'>Delivery</p>
-                              <p>Kes: 10</p>
+                              <p>Kes:  <span className='text-slate-700'>{deliveryFee}</span></p>
                           </div>
 
                           <div className='flex items-center justify-between mx-2 my-2 border-t pt-2'>
-                              <p className='text-slate-500'>Total</p>
-                              <p className='text-2xl'>Kes: 10</p>
+                              <p className='text-slate-700'>Total</p>
+                              <p className='text-2xl'>Kes: {totalPrice}</p>
                           </div>
                     </div>
               </div>
