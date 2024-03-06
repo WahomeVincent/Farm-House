@@ -5,6 +5,8 @@ import googleicon from '../assets/google-icon.webp'
 import { UserAuth } from '../context/auth'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import { BiHide } from "react-icons/bi";
+import { BiShowAlt } from "react-icons/bi";
 
 function Login() {
 
@@ -13,6 +15,12 @@ function Login() {
  const [email, setEmail] = useState('')
  const [password, setPassword] = useState('')
  const [error, setError] = useState('')
+ const [showPassword, setShowPassword] = useState(false)
+
+ function togglePassword() {
+  setShowPassword(prevE => !prevE )
+  console.log(showPassword);
+ }
 
  const navigate = useNavigate()
 
@@ -34,8 +42,8 @@ function Login() {
   return (
     <div>
         <div className=''>
-            <form onSubmit={handleSubmit} className='flex flex-col gap-4 items-center justify-center m-2 p-2 border border-slate-300 rounded shadow-2xl  '>
-                  <img src={logo} alt='logo' className='w-20' />
+            <form  className='flex flex-col gap-3 items-center justify-center md:w-1/3 md:mx-auto m-2 p-2 border border-slate-300 rounded shadow-2xl  '>
+                  <img src={logo} alt='logo' className='w-20 h-16' />
                   <h1 className='text-xl font-bold'>Welcome Back</h1>
 
                   <h2 className='text-xl font-bold'>Login</h2>
@@ -47,13 +55,13 @@ function Login() {
                     </p>
                   </div>
 
-                  <div className='w-full relative'>
+                  <div className='w-full relative my-2'>
                     <hr></hr>
-                    <p className='absolute -top-5 bg-white left-36 text-lg p-1 text-slate-500'>or</p>
+                    <p className='absolute -top-5 bg-white left-36 md:left-48 text-lg p-1 text-slate-500'>or</p>
                   </div>
 
 
-                  <div className='flex flex-col gap-2 w-full m-2'>
+                  <div className='flex flex-col gap-1 w-full m-2'>
                       <label className='text-base'>Email</label>
                       <input 
                           type=''
@@ -67,18 +75,20 @@ function Login() {
 
                       <label className='text-base'>Password</label>
                       <input 
-                          type=''
+                          type={showPassword ? 'text' : 'password'}
                           name='password'
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
-                          className='mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
-
-
+                          className='relative mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
                       />
+
+                      <div onClick={togglePassword} className='absolute bottom-[248px] right-8 text-lg'>
+                          {showPassword ? <BiShowAlt /> : <BiHide/>}
+                      </div>
 
                       <button className='bg-blue-500 p-2 w-full rounded text-white my-2 text-lg'>Sign in</button>
 
-                      <div className='text-xs flex justify-center'>
+                      <div onClick={togglePassword} className='text-xs flex justify-center'>
                             <p>Don't have an account? <Link to={'/register'} className='text-cgreen'>Register here</Link></p>
                       </div>
                   </div>
