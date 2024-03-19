@@ -29,7 +29,7 @@ function Categories() {
            
               uniqueCategories.map((category) => {
                 // Specify the URL for each category
-                const categoryUrl = `/products/${category.toLowerCase()}`;
+                const categoryUrl = `/product/${category.toLowerCase()}`;
 
                 return (
                   <Link to={categoryUrl} key={category} className='flex flex-col items-center'>
@@ -53,9 +53,7 @@ function Categories() {
                               className='card loader shadow-lg drop-shadow-lg'
                               style={{
                                 ...style,
-                                // backgroundImage: `url('https://cdn.pixabay.com/photo/2015/05/04/10/16/vegetables-752153_1280.jpg')`,
-                              }}
-                              
+                              }}   
                             />
 
                             <h1 className='text-lg mx-4 font-mono'>Loading...</h1>
@@ -63,8 +61,6 @@ function Categories() {
                   )
                 })
         }
-            
-        
       </div>
     </div>
   );

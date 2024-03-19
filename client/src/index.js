@@ -18,6 +18,7 @@ import Cart from './pages/Cart';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Account from './pages/Account';
+import Payment from './pages/Payment';
 
 
 
@@ -25,16 +26,19 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />} errorElement={<Errorpage />}>
           <Route index element={<Home />} />
-          <Route path='product/:filterBy' element={<ProductItem />} />
+          <Route path='/products/:filterBy' element={<ProductItem />} />
           <Route path='products' element={<Products />} />
-          <Route path='products/:category' element={<CategoryPage />} />
+          <Route path='/product/:category' element={<CategoryPage />} />
           <Route path='newproduct' element={<Newproduct />} />
           <Route path='aboutus' element={<Aboutus />} />
           <Route path='cart' element={<Cart />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} /> 
           <Route path='account' element={<Account />} />
+          {/* <Route path='payment' element={<Payment />} /> */}
+
     </Route>
+
   )
 )
 
