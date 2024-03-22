@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser');
 const { default: axios } = require('axios');
+const newproductModel = require('./models/newproductmodel')
+const Payment  = require('./models/paymentmodel')
 
 // Express app
 const app = express()
@@ -19,24 +21,9 @@ const PORT = process.env.PORT || 8000
 
 
 // Db connection
-console.log(process.env.MONGODB_URL);
 mongoose.connect(process.env.MONGODB_URL)
     .then(console.log("Database is connected"))
     .catch(err => console.log(err))
-
-
-// Schema
-const newproductSchema = mongoose.Schema({
-    name : String,
-    category : String,
-    price : Number,
-    image: String,
-    description: String,
-})
-
-//Model
-
-const newproductModel = mongoose.model('newproduct', newproductSchema)
 
 
 app.get('/', (req, res) => {
@@ -109,14 +96,14 @@ app.post('/stkpush',generateToken, async (req, res) => {
             BusinessShortCode: shortcode,    
             Password: password,    
             Timestamp: timestamp,    
-            TransactionType: "CustomerPayBillOnline",    
+            TransactionType: 'CustomerPayBillOnline',    
             Amount: amount,    
             PartyA: phonenumber,    
             PartyB: shortcode,    
-            PhoneNumber:phonenumber,    
-            CallBackURL: "https://mydomain.com/pat",    
-            AccountReference: 'Vince Holdings',    
-            TransactionDesc:"Test"
+            PhoneNumber: phonenumber,    
+            CallBackURL: 'https://nasty-baboons-know.loca.lt/callback',    
+            AccountReference: phonenumber,    
+            TransactionDesc:'Test 1'
         },
         {
             headers: {
@@ -125,13 +112,39 @@ app.post('/stkpush',generateToken, async (req, res) => {
         }
      ).then((data) => {
         console.log(data)
-        res.status(200).json(data)
+        res.status(200).json(data.data)
      }).catch((error) => {
         console.log(error.message);
         res.status(400).json(error.message)
      })
 })
 
+app.post('/callback', (req, res) => {
+    const callbackData = req.body
+    if(!callbackData.Body.stkCallback.CallbackMetadata){
+      console.log(callbackData.Body);
+      return res.json('ok');
+    }
+
+    const phone = callbackData.Body.stkCallback.CallbackMetadata.Item[4].Value
+    const amount = callbackData.Body.stkCallback.CallbackMetadata.Item[0].Value
+    const transaction_ID = callbackData.Body.stkCallback.CallbackMetadata.Item[1].Value
+
+    const paymentData = new Payment()
+
+    paymentData.number = phone
+    paymentData.amount = amount
+    paymentData.transaction_ID = transaction_ID
+
+    paymentData.save()
+        .then((data) => {
+            console.log(data);
+        }).catch((err) => {
+            console.log(err.message);
+        })
+
+    
+})
 
 
 app.listen(8000, (req, res) => {
