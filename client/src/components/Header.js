@@ -10,16 +10,28 @@ import {
 } from "@heroicons/react/24/outline";
 import { NavLink } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import { UserAuth } from "../context/auth";
+import toast from "react-hot-toast";
 
 
 function Header() {
 
+  const { user, logOut } = UserAuth()
   const cartNo = useSelector(state => state.product.cartItem.length)
 
   const [toggleMenu, setToggleMenu] = useState(false);
 
   function hideMenu(){
     setToggleMenu(false)
+  }
+
+  function toggleSignUp() {
+    if(user){
+      setTimeout(() => {
+        logOut()
+        toast.success('Logged Out Successfully.')
+      }, '1000')
+    }
   }
 
 
@@ -41,11 +53,24 @@ function Header() {
                       </div>
               {/* primary */}
                       <div className="hidden lg:flex items-center gap-8 mx-10 text-lg">
+                          
                           <NavLink to={'products'} >Products</NavLink>
                           <NavLink to={'/aboutus'}>Aboutus</NavLink>
                           <NavLink to={'/contactus'}>Contactus</NavLink>
-                          <NavLink to={'/cart'}><ShoppingCartIcon className="h-6 w-6 "/><span className=" absolute top-4 right-24 bg-red-600 h-4 w-4 flex items-center justify-center text-white text-sm rounded-full mb-4">{cartNo}</span></NavLink>
-                          <NavLink to={'/login'} ><UserIcon className="h-6 w-6 border border-slate-500 rounded-full  " /></NavLink>
+                          <NavLink to={'/cart'} className='relative'><ShoppingCartIcon className="h-6 w-6 "/><span className=" absolute -top-1 left-4 bg-red-600 h-4 w-4 flex items-center justify-center text-white text-sm rounded-full mb-4">{cartNo}</span></NavLink>
+                          {user && user.email === 'admin@gmail.com' && 
+                            <NavLink to={'/newproduct'}>
+                              New Product
+                            </NavLink>
+                          }
+                          {/* <NavLink to={'/account'} >
+                              <p className="bg-cgreen text-white p-1 rounded w-32 text-center shadow shadow-amber-950">Get Started</p>
+                          </NavLink> */}
+                          
+                          <button onClick={toggleSignUp} className="bg-cgreen text-white p-1 rounded w-32 text-center shadow shadow-amber-950">
+                            {user && user.email ? <div>Logout</div> : <NavLink to={'/login'}>Sign In</NavLink>}
+                          </button>
+                          
 
                       </div>
             </div>
@@ -91,6 +116,8 @@ function Header() {
               <NavLink to={'/aboutus'} >Aboutus</NavLink>
               <NavLink to={'/contactus'} >Contactus</NavLink>
               <NavLink to={'/login'}>Sign In</NavLink>
+              {user && user.email === 'admin@gmail.com' && <NavLink to={'/newproduct'}>New Product</NavLink>}
+            
             </div>
           </div>
         </div>
