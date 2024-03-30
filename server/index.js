@@ -5,7 +5,7 @@ const dotenv = require('dotenv').config()
 const bodyParser = require('body-parser');
 const { default: axios } = require('axios');
 const newproductModel = require('./models/newproductmodel')
-const Payment  = require('./models/paymentmodel')
+const Payment = require('./models/paymentmodel')
 
 // Express app
 const app = express()
@@ -59,9 +59,9 @@ async function generateToken(req, res, next) {
     const consumerKey = process.env.CONSUMER_KEY
     const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString('base64')
 
-    await axios.get("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",{
-        headers : {
-            Authorization : `Basic ${auth}`
+    await axios.get("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials", {
+        headers: {
+            Authorization: `Basic ${auth}`
         }
     }).then((data) => {
         // console.log(data.data.access_token)
@@ -73,18 +73,20 @@ async function generateToken(req, res, next) {
 }
 
 
-app.post('/stkpush',generateToken, async (req, res) => {
-    const {phonenumber, amount} = req.body
+app.post('/stkpush', generateToken, async (req, res) => {
+    
     console.log(req.body);
+    const amount = req.body.amount
+    const phonenumber = req.body.phone.substring(1)
 
     const date = new Date();
     const timestamp =
-    date.getFullYear() +
-    ("0" + (date.getMonth() + 1)).slice(-2) +
-    ("0" + date.getDate()).slice(-2) +
-    ("0" + date.getHours()).slice(-2) +
-    ("0" + date.getMinutes()).slice(-2) +
-    ("0" + date.getSeconds()).slice(-2);
+        date.getFullYear() +
+        ("0" + (date.getMonth() + 1)).slice(-2) +
+        ("0" + date.getDate()).slice(-2) +
+        ("0" + date.getHours()).slice(-2) +
+        ("0" + date.getMinutes()).slice(-2) +
+        ("0" + date.getSeconds()).slice(-2);
 
     const shortcode = process.env.MPESA_SHORTCODE
     const passkey = process.env.MPESA_PASSKEY
@@ -92,40 +94,48 @@ app.post('/stkpush',generateToken, async (req, res) => {
     const password = Buffer.from(shortcode + passkey + timestamp).toString("base64");
 
     await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
-        {    
-            BusinessShortCode: shortcode,    
-            Password: password,    
-            Timestamp: timestamp,    
-            TransactionType: 'CustomerPayBillOnline',    
-            Amount: amount,    
-            PartyA: phonenumber,    
-            PartyB: shortcode,    
-            PhoneNumber: phonenumber,    
-            CallBackURL: 'https://nasty-baboons-know.loca.lt/callback',    
-            AccountReference: phonenumber,    
-            TransactionDesc:'Test 1'
+        {
+            BusinessShortCode: shortcode,
+            Password: password,
+            Timestamp: timestamp,
+            TransactionType: 'CustomerPayBillOnline',
+            Amount: amount,
+            PartyA: `254${phonenumber}`,
+            PartyB: shortcode,
+            PhoneNumber: `254${phonenumber}`,
+            CallBackURL: 'https://young-camels-type.loca.lt/callback',
+            AccountReference: 'Vince Holdings',
+            TransactionDesc: 'Test 1'
         },
         {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         }
-     ).then((data) => {
+    ).then((data) => {
         console.log(data)
         res.status(200).json(data.data)
-     }).catch((error) => {
+    }).catch((error) => {
         console.log(error.message);
         res.status(400).json(error.message)
-     })
+    })
 })
 
-app.post('/callback', (req, res) => {
+app.post('/callback', async(req, res) => {
     const callbackData = req.body
-    if(!callbackData.Body.stkCallback.CallbackMetadata){
-      console.log(callbackData.Body);
-      return res.json('ok');
+    if (!callbackData.Body) {
+        console.log(callbackData.Body.stkCallback);
+        return res.json('ok');
     }
 
+    console.log(callbackData.Body.stkCallback.CallbackMetadata);
+    // const paymentDataReq = callbackData.Body.stkCallback.CallbackMetadata
+
+    // res.json(paymentDataReq)
+
+
+
+  
     const phone = callbackData.Body.stkCallback.CallbackMetadata.Item[4].Value
     const amount = callbackData.Body.stkCallback.CallbackMetadata.Item[0].Value
     const transaction_ID = callbackData.Body.stkCallback.CallbackMetadata.Item[1].Value
@@ -143,11 +153,11 @@ app.post('/callback', (req, res) => {
             console.log(err.message);
         })
 
-    
 })
+
 
 
 app.listen(8000, (req, res) => {
     console.log('Server is running on port : ' + PORT);
-    
+
 })
