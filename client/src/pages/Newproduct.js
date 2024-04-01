@@ -17,7 +17,6 @@ const [data, setData] = useState({
 })
 
 const productData = useSelector((state) => state)
-console.log(productData);
 
 const dispatch = useDispatch()
 
@@ -59,7 +58,6 @@ async function handleSubmit(e) {
         body: JSON.stringify(data),
     })
 
-    console.log(fetchData);
     const dataRes = await fetchData.json()
     console.log( dataRes);
     
@@ -86,7 +84,7 @@ async function handleSubmit(e) {
   return (
     <div>
 
-      <Header />
+      
       <div className=''>
 
           <form onSubmit={handleSubmit} className='my-10 p-2 border border-slate-300 m-2 rounded shadow drop-shadow md:max-w-lg md:m-auto md:my-4'>

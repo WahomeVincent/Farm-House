@@ -86,7 +86,7 @@ function Login() {
                           {showPassword ? <BiShowAlt /> : <BiHide/>}
                       </div>
 
-                      <button className='bg-blue-500 p-2 w-full rounded text-white my-2 text-lg'>Sign in</button>
+                      <button onClick={handleSubmit}className='bg-blue-500 p-2 w-full rounded text-white my-2 text-lg'>Sign in</button>
 
                       <div onClick={togglePassword} className='text-xs flex justify-center'>
                             <p>Don't have an account? <Link to={'/register'} className='text-cgreen'>Register here</Link></p>

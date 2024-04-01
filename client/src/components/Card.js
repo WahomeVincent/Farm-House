@@ -21,7 +21,7 @@ function Card({image, name, price, category, id}) {
   return (
     <div>
             <div className='w-40 md:w-64 m-2 border border-slate-400 rounded shadow-lg drop-shadow-lg'>
-                <Link to={`/product/${id}`} onClick={ () => window.scrollTo({top:0, behavior:'smooth'})}>
+                <Link to={`/products/${id}`} onClick={ () => window.scrollTo({top:0, behavior:'smooth'})}>
                       <img src={image} alt='produce' className='h-28 w-full'/>
 
                       <div className='my-2 px-1 '>

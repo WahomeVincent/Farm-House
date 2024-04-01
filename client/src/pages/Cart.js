@@ -29,17 +29,17 @@ function proceedToPay(){
     setShowPopUp(prevE => !prevE)
 }
 
-// async function handlePayment() {
-// const amount = totalPrice
-// const phone = phonenumber
-//   const paymentData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/stkpush`, {
-//     method: 'POST',
-//     headers: {
-//         'content-type': 'application/json',
-//     },
-//     body: JSON.stringify({amount, phone}),
-//   })
-// }
+async function handlePayment() {
+const amount = totalPrice
+const phone = phonenumber
+  const paymentData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/stkpush`, {
+    method: 'POST',
+    headers: {
+        'content-type': 'application/json',
+    },
+    body: JSON.stringify({amount, phone}),
+  })
+}
 
 
 
@@ -110,7 +110,7 @@ function proceedToPay(){
                           </div>
                           
                             
-                          <button onClick={proceedToPay} className='bg-cgreen w-full p-2 text-white text-lg mt-4 rounded'>
+                          <button onClick={proceedToPay} className='bg-cgreen w-2/3 mx-12 my-4 p-2 text-white text-lg mt-4 rounded'>
                               Proceed to Pay
                           </button>
                               
@@ -120,7 +120,7 @@ function proceedToPay(){
                           {/* Popup */}
                           {showPopUp &&
                                       <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
-                          <div className='flex flex-col items-center justify-center w-5/6 mx-auto border rounded shadow-lg gap-1 bg-white'>
+                          <div className='flex flex-col items-center justify-center w-5/6 md:w-1/3 mx-auto border rounded shadow-lg gap-1 bg-white'>
                            
                            <XMarkIcon onClick={() => setShowPopUp(false)} className='h-6 border rounded-full bg-slate-100 ml-auto mr-2 mt-2 ' />
                            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/512px-M-PESA_LOGO-01.svg.png' alt='mpesa-logo' className='h-20' />
@@ -139,7 +139,7 @@ function proceedToPay(){
                                   className='mx-6 py-5 text-lg text-center bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1"  rounded-lg  h-8'
 
                               />
-                              <button  className='bg-cgreen text-white w-full rounded p-2 text-xl font-bold mt-4'>Pay</button>
+                              <button onClick={handlePayment} className='bg-cgreen text-white w-2/3 my-4 rounded p-2 text-xl font-bold mt-4'>Pay</button>
                           </div>
                           </div>
                             }

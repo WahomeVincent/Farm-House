@@ -34,7 +34,7 @@ function App() {
           <main>
               <Outlet />
           </main>
-          {/* <Footer /> */}
+          <Footer />
       </AuthContextProvider>
     </div>
   );
