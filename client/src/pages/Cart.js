@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MdDelete } from "react-icons/md";
 import { FiPlus } from "react-icons/fi";
@@ -6,6 +6,7 @@ import { FiMinus } from "react-icons/fi";
 import { deleteCartItem, increaseItemNo, decreaseItemNo } from '../redux/productSlice';
 import { Link } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 
 function Cart() {
 const productCart = useSelector(state => state.product.cartItem)
@@ -18,7 +19,7 @@ if(totalPriceCart > 2000){
     discount = Math.floor(totalPriceCart * 0.05)
 }
 
-let totalPrice = (totalPriceCart + deliveryFee) - discount 
+let totalPrice = (totalPriceCart ) - discount 
 
 const dispatch = useDispatch()
 
@@ -40,6 +41,7 @@ const phone = phonenumber
     body: JSON.stringify({amount, phone}),
   })
 }
+
 
 
 
@@ -116,6 +118,7 @@ const phone = phonenumber
                               
                     </div>
 
+                    
 
                           {/* Popup */}
                           {showPopUp &&

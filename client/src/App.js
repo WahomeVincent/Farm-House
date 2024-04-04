@@ -1,5 +1,4 @@
 import Header from './components/Header';
-import Home from './pages/Home';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -16,7 +15,7 @@ function App() {
 
   useEffect(() => {
     (async() => {
-      const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/products`)
+      const res = await fetch('https://farm-house-server-kappa.vercel.app/products')
       const resData = await res.json()
       dispatch(productsRedux(resData))
     })()

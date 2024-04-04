@@ -27,8 +27,9 @@ mongoose.connect(process.env.MONGODB_URL)
 
 
 app.get('/', (req, res) => {
-    res.send("Server is running")
+    res.send("Server is running . I1,22,2,")
 })
+
 
 app.post('/newproduct', async (req, res) => {
     const data = newproductModel(req.body)
@@ -103,7 +104,7 @@ app.post('/stkpush', generateToken, async (req, res) => {
             PartyA: `254${phonenumber}`,
             PartyB: shortcode,
             PhoneNumber: `254${phonenumber}`,
-            CallBackURL: 'https://young-camels-type.loca.lt/callback',
+            CallBackURL: 'https://hungry-lines-itch.loca.lt/callback',
             AccountReference: 'Vince Holdings',
             TransactionDesc: 'Test 1'
         },
@@ -121,20 +122,14 @@ app.post('/stkpush', generateToken, async (req, res) => {
     })
 })
 
+
+
 app.post('/callback', async(req, res) => {
     const callbackData = req.body
     if (!callbackData.Body) {
-        console.log(callbackData.Body.stkCallback);
+        console.log(callbackData.Body);
         return res.json('ok');
     }
-
-    console.log(callbackData.Body.stkCallback.CallbackMetadata);
-    // const paymentDataReq = callbackData.Body.stkCallback.CallbackMetadata
-
-    // res.json(paymentDataReq)
-
-
-
   
     const phone = callbackData.Body.stkCallback.CallbackMetadata.Item[4].Value
     const amount = callbackData.Body.stkCallback.CallbackMetadata.Item[0].Value
@@ -152,8 +147,12 @@ app.post('/callback', async(req, res) => {
         }).catch((err) => {
             console.log(err.message);
         })
+    
+    res.json(callbackData)
 
 })
+
+
 
 
 

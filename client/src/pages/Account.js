@@ -1,6 +1,6 @@
 import React from 'react'
 import { UserAuth } from '../context/auth'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Account() {
 
@@ -18,10 +18,16 @@ function Account() {
     }
   return (
     <div>
-        <h1>My Account</h1>
-        <p>My email is: {user && user.email} </p>
+        <div className='m-4 md:flex md:flex-col md:items-center md:justify-center'>
+            <h1 className='font-bold text-xl underline'>My Account</h1>
+            <p className='my-4'>My email is: {user && user.email} </p>
 
-        <button onClick={handleLogout} className='bg-blue-500 p-1 text-white mx-4 my-4'>Logout</button>
+            <div className='flex items-center justify-evenly'>
+                <button onClick={handleLogout} className='bg-blue-500 p-2 rounded text-white mx-4 my-4'>Logout</button>
+                <Link to={'/products'} className='bg-cgreen text-white p-2 rounded'>Search products</Link>
+            </div>
+
+        </div>
     </div>
   )
 }
