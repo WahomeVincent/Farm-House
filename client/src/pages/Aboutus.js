@@ -12,9 +12,9 @@ function Aboutus() {
             <div className='relative w-full '>
                 <img src={farmer} alt='' className=' w-full h-96 object-cover'/>
             </div>
-            <div className='absolute bottom-24 md:top-72 right-5 md:right-10 w-3/4 md:w-1/3 md:h-1/3 bg-white border shadow'>
+            {/* <div className='absolute bottom-64 md:top-72 right-5 md:right-10 w-3/4 md:w-1/3 md:h-1/3 bg-white border shadow'>
                 <h1 className='text-5xl p-2 text-cgreen leading-normal'>Together to feed the world.</h1>
-            </div>
+            </div> */}
 
             <h1 className='text-2xl border-b-2 mt-20 mx-4'>Our Story</h1>
 

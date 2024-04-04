@@ -16,7 +16,7 @@ app.use(cors())
 app.use(express.json());
 
 
-const PORT = process.env.PORT || 8000
+const PORT = 'https://farm-house-server-kappa.vercel.app/'
 
 
 
