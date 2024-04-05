@@ -16,7 +16,7 @@ app.use(cors())
 app.use(express.json());
 
 
-const PORT = 'https://farm-house-server-kappa.vercel.app/'
+const PORT = 'https://farm-house-server-kappa.vercel.app/' || 8000
 
 
 
@@ -27,7 +27,7 @@ mongoose.connect(process.env.MONGODB_URL)
 
 
 app.get('/', (req, res) => {
-    res.send("Server is running . I1,22,2,")
+    res.send("Server is running")
 })
 
 
