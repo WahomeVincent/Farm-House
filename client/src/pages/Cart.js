@@ -33,8 +33,8 @@ function proceedToPay(){
 async function handlePayment() {
 const amount = totalPrice
 const phone = phonenumber
-const liveUrl = 'https://farm-house-server-eta.vercel.app'
-  const paymentData = await fetch(`${process.env.liveUrl}/stkpush`, {
+
+  const paymentData = await fetch('https://farm-house-server-eta.vercel.app/stkpush', {
     method: 'POST',
     headers: {
         'content-type': 'application/json',
