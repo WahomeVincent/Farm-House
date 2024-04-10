@@ -15,7 +15,7 @@ function App() {
 
   useEffect(() => {
     (async() => {
-      const res = await fetch('https://farm-house-server-kappa.vercel.app')
+      const res = await fetch('https://farm-house-server-eta.vercel.app/products')
       const resData = await res.json()
       dispatch(productsRedux(resData))
     })()
