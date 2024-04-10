@@ -16,7 +16,7 @@ app.use(cors())
 app.use(express.json());
 
 
-const PORT = 'https://farm-house-server-kappa.vercel.app/' || 8000
+const PORT = 'https://farm-house-server-eta.vercel.app' || 8000
 
 
 
@@ -153,10 +153,6 @@ app.post('/callback', async(req, res) => {
 })
 
 
-
-
-
-app.listen(8000, (req, res) => {
+app.listen(PORT, (req, res) => {
     console.log('Server is running on port : ' + PORT);
-
 })
