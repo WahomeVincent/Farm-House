@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { IoMdMail } from "react-icons/io";
 import { AiOutlineCopyright } from "react-icons/ai";
+import { useLocation } from 'react-router-dom'; // If using React Router
+
 
 function Footer() {
+
+    // Get the current location
+    const location = useLocation();
+
+    // Scroll to the top when the component mounts or the location changes
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [location]);
 
   function getCurrentYear() {
     return new Date().getFullYear()
@@ -23,7 +33,6 @@ function Footer() {
               <div className='flex flex-col text-lg gap-2 md:gap-4'>
                   <Link to={'/products'}>Products</Link>
                   <Link to={'/aboutus'}>About Us</Link>
-                  <Link to={'/contactus'}>Contact Us</Link>
                   <Link to={'/login'}>Sign In</Link>
                 
               </div>

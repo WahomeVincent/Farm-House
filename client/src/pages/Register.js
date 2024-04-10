@@ -47,9 +47,9 @@ function Register() {
               <img src={logo} alt='logo' className='w-20 my-2' />
 
               <div className='w-full flex flex-col items-center gap-4'>
-                    <h1 className='text-2xl font-bold'>Welcome Back</h1>
+                    <h1 className='text-2xl font-bold underline'>Welcome Back</h1>
 
-                    <h2 className='text-xl font-bold'>Create an Account</h2>
+                    <h2 className='text-xl font-bold underline'>Create an Account</h2>
               </div>
 
 
@@ -73,9 +73,9 @@ function Register() {
                       className=' relative mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
                   />
 
-                <div onClick={togglePassword} className='absolute bottom-[294px] right-8 text-lg'>
+                {/* <div onClick={togglePassword} className='absolute bottom-[294px] right-8 text-lg'>
                           {showPassword ? <BiShowAlt /> : <BiHide/>}
-                </div>
+                </div> */}
 
                   <button className='bg-blue-500 p-2 w-full rounded text-white my-2 md:my-4 text-lg'>Create Account</button>
 

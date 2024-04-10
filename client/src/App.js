@@ -24,7 +24,7 @@ function App() {
 
 
   return (
-    <div className="App">
+    <div className="App overflow-y-auto">
         <Toaster />
         <AuthContextProvider>
         <Sticky className='relative z-50 ' top="#header" bottomBoundary="#content">

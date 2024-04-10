@@ -12,12 +12,13 @@ const productData = useSelector(state => state.product.productList)
 const filteredProducts = productData.filter((item) => item.category.toLowerCase()=== category) 
     
   return (
-    <div>
+    <div className='flex flex-wrap'>
             {
                 filteredProducts.map(item => {
                     return(
                         <Card 
-                            key={item}
+                            key={item._id}
+                            id={item._id}
                             image={item.image}
                             name={item.name}
                             price={item.price}                

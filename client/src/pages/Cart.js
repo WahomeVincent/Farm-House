@@ -7,6 +7,8 @@ import { deleteCartItem, increaseItemNo, decreaseItemNo } from '../redux/product
 import { Link } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
+import toast from "react-hot-toast";
+
 
 function Cart() {
 const productCart = useSelector(state => state.product.cartItem)
@@ -19,7 +21,7 @@ if(totalPriceCart > 2000){
     discount = Math.floor(totalPriceCart * 0.05)
 }
 
-let totalPrice = (totalPriceCart ) - discount 
+let totalPrice = (totalPriceCart + deliveryFee ) - discount 
 
 const dispatch = useDispatch()
 
@@ -41,6 +43,8 @@ const phone = phonenumber
     },
     body: JSON.stringify({amount, phone}),
   })
+  toast.success('STK push sent to your phone. Please Enter your Pin.')
+  
 }
 
 
@@ -88,7 +92,7 @@ const phone = phonenumber
                     <Link to={'/products'} className='bg-slate-300 text-white p-2 rounded w-1/2 mx-auto'>Continue Shopping...</Link>
 
               </div>
-                    <div className='m-2 border rounded shadow-lg drop-shadow-lg md:w-2/5 md:ml-20 md:h-fit md:text-lg'>
+                    <div className='m-4 border border-slate-300 rounded shadow-2xl drop-shadow-2xl md:w-2/5 md:ml-20 md:h-fit md:text-lg'>
                           <h1 className='mx-2 my-2 text-xl border-b pb-2'>Order Summary</h1>
                           <div className='flex items-center justify-between mx-2 my-4'>
                               <p className='text-slate-500'>Discount</p>

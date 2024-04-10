@@ -48,7 +48,7 @@ function Login() {
 
                   <h2 className='text-xl font-bold'>Login</h2>
 
-                  <div className='flex bg-slate-200 rounded p-1 items-center justify-center w-full my-2'>
+                  {/* <div className='flex bg-slate-200 rounded p-1 items-center justify-center w-full my-2'>
                     <img src={googleicon} alt='google' className='w-10' />
                     <p>
                       Sign in with Google
@@ -58,7 +58,7 @@ function Login() {
                   <div className='w-full relative my-2'>
                     <hr></hr>
                     <p className='absolute -top-5 bg-white left-36 md:left-48 text-lg p-1 text-slate-500'>or</p>
-                  </div>
+                  </div> */}
 
 
                   <div className='flex flex-col gap-1 w-full m-2'>
@@ -82,9 +82,9 @@ function Login() {
                           className='relative mt-1 my-4 pl-4 py-5 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 sm:text-sm focus:ring-1"  rounded-lg w-full h-8'
                       />
 
-                      <div onClick={togglePassword} className='absolute bottom-[248px] right-8 text-lg'>
+                      {/* <div onClick={togglePassword} className='text-lg'>
                           {showPassword ? <BiShowAlt /> : <BiHide/>}
-                      </div>
+                      </div> */}
 
                       <button onClick={handleSubmit}className='bg-blue-500 p-2 w-full rounded text-white my-2 text-lg'>Sign in</button>
 

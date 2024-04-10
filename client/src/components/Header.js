@@ -47,7 +47,7 @@ function Header() {
                       <NavLink to={'/'}  className="flex gap-1 font-bold text-gray-700 items-center ">
 
                           <PaperAirplaneIcon className="h-6 w-6 text-primary" />
-                          <span>Paper.io</span>
+                          <span>Farm.shop</span>
                       </NavLink>
                        
                       </div>
@@ -56,7 +56,7 @@ function Header() {
                           
                           <NavLink to={'products'} >Products</NavLink>
                           <NavLink to={'/aboutus'}>Aboutus</NavLink>
-                          <NavLink to={'/contactus'}>Contactus</NavLink>
+                          {/* <NavLink to={'/contactus'}>Contactus</NavLink> */}
                           <NavLink to={'/cart'} className='relative'><ShoppingCartIcon className="h-6 w-6 "/><span className=" absolute -top-1 left-4 bg-red-600 h-4 w-4 flex items-center justify-center text-white text-sm rounded-full mb-4">{cartNo}</span></NavLink>
                           {user && user.email === 'admin@gmail.com' && 
                             <NavLink to={'/newproduct'}>
@@ -114,8 +114,8 @@ function Header() {
               <NavLink to={'/products'} >Products</NavLink>
               <NavLink to={'/account'} >Account</NavLink>
               <NavLink to={'/aboutus'} >Aboutus</NavLink>
-              <NavLink to={'/contactus'} >Contactus</NavLink>
-              <NavLink to={'/login'}>Sign In</NavLink>
+              {/* <NavLink to={'/contactus'} >Contactus</NavLink> */}
+              {user && user.email ? <NavLink onClick={toggleSignUp}>Logout</NavLink> : <NavLink to={'/login'}>Sign In</NavLink>}
               {user && user.email === 'admin@gmail.com' && <NavLink to={'/newproduct'}>New Product</NavLink>}
             
             </div>

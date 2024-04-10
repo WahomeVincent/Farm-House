@@ -63,6 +63,7 @@ function ProductItem() {
 
         :
         <>
+            
             <div class="center-item">
                     <div class="wave"></div>
                     <div class="wave"></div>
@@ -75,6 +76,7 @@ function ProductItem() {
                     <div class="wave"></div>
                     <div class="wave"></div>
             </div>
+           
         </> 
         }
     </div>

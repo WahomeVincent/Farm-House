@@ -18,19 +18,19 @@ function Aboutus() {
 
             <h1 className='text-2xl border-b-2 mt-20 mx-4'>Our Story</h1>
 
-            <div className='mt-4 mx-2 md:flex md:items-center md:justify-between md:mx-4 md:gap-5'>
+            <div className='m-4 md:flex md:items-center md:justify-between md:mx-4 md:gap-5'>
                 <p className='text-sm md:w-1/2 md:text-base'>In the heart of Kiambu, where fertile soil meets a passion for organic living, the seeds of <span className='text-cgreen'>Farm House</span> were sown. Our story begins with a shared dream among a group of individuals who saw an opportunity to make a difference in the way we consume and appreciate fresh produce.
 
                 Motivated by a deep-rooted love for nature and a commitment to healthier living, our founders embarked on a journey to bridge the gap between conscious consumers and sustainable agriculture. Inspired by the richness of local farmlands and the desire to bring the best of organic produce to every household.
 
                 </p>
 
-                <img src={story} alt='' className='md:w-1/3 md:h-60 rounded'/>
+                <img src={story} alt='' className='md:w-1/3 md:h-60 rounded my-4'/>
                
             </div>
 
-            <div className='mt-24 mx-2 md:flex md:items-center md:justify-between md:mx-4 md:gap-5 md:border-t py-2'>
-                <img src={tractor} alt='' className='md:w-1/3 md:h-60 rounded'/>
+            <div className='m-4 md:flex md:items-center md:justify-between md:mx-4 md:gap-5 md:border-t py-2'>
+                <img src={tractor} alt='' className=' my-4 md:w-1/3 md:h-60 rounded'/>
                 <div className='md:w-1/2'>
                     <h1 className='text-lg font-bold md:text-xl underline my-2 md:my-2'>Our Mission</h1>
                     <p className='text-sm md:text-base'> At Farm House, we are on a mission to cultivate a healthier and more sustainable world. Rooted in our passion for organic farming and a deep respect for nature, we strive to bring nourishing, responsibly sourced products directly to your doorstep.
