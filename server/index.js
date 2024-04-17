@@ -9,15 +9,14 @@ const Payment = require('./models/paymentmodel')
 
 // Express app
 const app = express()
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(cors())
 app.use(express.json());
 
 
-const PORT = 'https://farm-house-server-eta.vercel.app' || 8000
-
+const PORT =  'https://farm-house-server-eta.vercel.app/' || 8000
 
 
 // Db connection
@@ -153,6 +152,6 @@ app.post('/callback', async(req, res) => {
 })
 
 
-app.listen(PORT, (req, res) => {
+app.listen(8000, (req, res) => {
     console.log('Server is running on port : ' + PORT);
 })

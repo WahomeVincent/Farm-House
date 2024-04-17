@@ -50,7 +50,7 @@ async function handleSubmit(e) {
   console.log(data);
   if (data.name && data.category && data.price && data.image && data.description) {
     
-    const fetchData = await fetch('https://farm-house-server-eta.vercel.app/newproduct', {
+    const fetchData = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/newproduct`, {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
